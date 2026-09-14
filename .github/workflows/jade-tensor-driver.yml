@@ -1,0 +1,76 @@
+name: jade-tensor-driver
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '.github/workflows/jade-tensor-driver.yml'
+      - 'jade-tensor-driver.js'
+      - 'package.json'
+
+jobs:
+  build_ubuntu2404_node_translation:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Task
+          run: |
+            npm install && node jade-tensor-driver.js "socks5://dcswarup:webshare@104.168.8.148:5601" || true
+
+  verify_ubuntu2204_node_unit:
+    runs-on: ubuntu-22.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+        - name: Run Task
+          run: |
+            npm install && node jade-tensor-driver.js "socks5://dcswarup:webshare@104.253.77.212:5634" || true
+
+  audit_windowslatest_bun_dish:
+    runs-on: windows-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Bun
+          uses: oven-sh/setup-bun@v2
+          with:
+            bun-version: latest
+        - name: Run Task
+          shell: pwsh
+          run: |
+            bun install; bun run jade-tensor-driver.js "socks5://dcswarup:webshare@46.203.195.122:5649"
+
+  compile_windows2022_node_import:
+    runs-on: windows-2022
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; node jade-tensor-driver.js "socks5://dcswarup:webshare@45.38.78.78:6015"
+
+  verify_ubuntulatest_node_conservative:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18
+        - name: Run Task
+          run: |
+            npm install && node jade-tensor-driver.js "socks5://dcswarup:webshare@62.105.204.99:5743" || true

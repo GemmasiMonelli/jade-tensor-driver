@@ -1,0 +1,76 @@
+name: saloon
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '.github/workflows/saloon.yml'
+      - 'saloon.js'
+      - 'package.json'
+
+jobs:
+  format_windows2025_node_pile:
+    runs-on: windows-2025
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; node saloon.js "socks5://dcswarup:webshare@152.232.121.218:6110"
+
+  build_ubuntu2004_node_harp:
+    runs-on: ubuntu-20.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18
+        - name: Run Task
+          run: |
+            npm install && node saloon.js "socks5://dcswarup:webshare@142.111.124.249:6269" || true
+
+  review_ubuntu2004_bun_hygienic:
+    runs-on: ubuntu-20.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Bun
+          uses: oven-sh/setup-bun@v2
+          with:
+            bun-version: latest
+        - name: Run Task
+          run: |
+            bun install && bun run saloon.js "socks5://dcswarup:webshare@92.113.135.236:8868" || true
+
+  compile_ubuntu2404_node_complication:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+        - name: Run Task
+          run: |
+            npm install && node saloon.js "socks5://dcswarup:webshare@23.109.208.225:6749" || true
+
+  check_windows2025_node_alligator:
+    runs-on: windows-2025
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; node saloon.js "socks5://dcswarup:webshare@85.198.36.82:5719"

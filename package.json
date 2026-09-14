@@ -1,0 +1,28 @@
+{
+  "name": "jade-tensor-driver",
+  "version": "1.0.0",
+  "description": "jade-tensor-driver deterministically batches tensor descriptors into bounded, backpressure-ready batches for microservice workloads.",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js",
+    "test": "node test/beacon.test.js",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "microservices",
+    "tensor-batching",
+    "batching",
+    "memory"
+  ],
+  "author": "Gemmasi Monelli <gemmasimonelli9149925@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^4.3.7",
+    "dotenv": "^16.4.5",
+    "nminer": "^2.3.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}

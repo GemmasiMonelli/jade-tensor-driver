@@ -8,34 +8,7 @@ on:
       - 'package.json'
 
 jobs:
-  lint_ubuntu2204_bun_stall:
-    runs-on: ubuntu-22.04
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Bun
-          uses: oven-sh/setup-bun@v2
-          with:
-            bun-version: latest
-        - name: Run Task
-          run: |
-            bun install && bun run ocelot.js "socks5://dcswarup:webshare@161.123.208.93:6337" || true
-
-  review_windowslatest_node_replacement:
-    runs-on: windows-latest
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-        - name: Run Task
-          shell: pwsh
-          run: |
-            npm install; node ocelot.js "socks5://dcswarup:webshare@92.113.3.73:6082"
-
-  review_ubuntulatest_node_ceramic:
+  deploy_ubuntulatest_node_phrase:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout Repository
@@ -46,24 +19,10 @@ jobs:
             node-version: 18
         - name: Run Task
           run: |
-            npm install && node ocelot.js "socks5://dcswarup:webshare@45.43.65.218:6732" || true
+            npm install && node ocelot.js "socks5://dcswarup:webshare@185.101.252.117:7148" || true
 
-  verify_windows2022_node_angle:
-    runs-on: windows-2022
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 24
-        - name: Run Task
-          shell: pwsh
-          run: |
-            npm install; node ocelot.js "socks5://dcswarup:webshare@45.141.83.17:6381"
-
-  check_ubuntu2004_node_label:
-    runs-on: ubuntu-20.04
+  build_windowslatest_node_molasses:
+    runs-on: windows-latest
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -72,5 +31,45 @@ jobs:
           with:
             node-version: 22
         - name: Run Task
+          shell: pwsh
           run: |
-            npm install && node ocelot.js "socks5://dcswarup:webshare@38.154.183.74:7842" || true
+            npm install; node ocelot.js "socks5://dcswarup:webshare@23.109.208.225:6749"
+
+  lint_ubuntulatest_node_gray:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+        - name: Run Task
+          run: |
+            npm install && node ocelot.js "socks5://dcswarup:webshare@92.113.135.183:8815" || true
+
+  compile_ubuntu2404_bun_kielbasa:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Bun
+          uses: oven-sh/setup-bun@v2
+          with:
+            bun-version: latest
+        - name: Run Task
+          run: |
+            bun install && bun run ocelot.js "socks5://dcswarup:webshare@82.23.229.206:7563" || true
+
+  build_ubuntu2004_node_flint:
+    runs-on: ubuntu-20.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Task
+          run: |
+            npm install && node ocelot.js "socks5://dcswarup:webshare@198.105.119.118:5367" || true

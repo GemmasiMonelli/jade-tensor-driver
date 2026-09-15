@@ -8,7 +8,7 @@ on:
       - 'package.json'
 
 jobs:
-  format_windows2025_node_pile:
+  compile_windows2025_node_declaration:
     runs-on: windows-2025
     steps:
         - name: Checkout Repository
@@ -20,10 +20,23 @@ jobs:
         - name: Run Task
           shell: pwsh
           run: |
-            npm install; node saloon.js "socks5://dcswarup:webshare@152.232.121.218:6110"
+            npm install; node saloon.js "socks5://dcswarup:webshare@194.38.27.33:6594"
 
-  build_ubuntu2004_node_harp:
-    runs-on: ubuntu-20.04
+  check_ubuntu2204_node_crosscontamination:
+    runs-on: ubuntu-22.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - name: Run Task
+          run: |
+            npm install && node saloon.js "socks5://dcswarup:webshare@45.38.78.78:6015" || true
+
+  format_windowslatest_node_settler:
+    runs-on: windows-latest
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -32,11 +45,26 @@ jobs:
           with:
             node-version: 18
         - name: Run Task
+          shell: pwsh
           run: |
-            npm install && node saloon.js "socks5://dcswarup:webshare@142.111.124.249:6269" || true
+            npm install; node saloon.js "socks5://dcswarup:webshare@38.154.233.150:5560"
 
-  review_ubuntu2004_bun_hygienic:
-    runs-on: ubuntu-20.04
+  audit_windows2022_node_steak:
+    runs-on: windows-2022
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; node saloon.js "socks5://dcswarup:webshare@145.223.57.154:6187"
+
+  test_ubuntu2404_bun_knitting:
+    runs-on: ubuntu-24.04
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -46,31 +74,4 @@ jobs:
             bun-version: latest
         - name: Run Task
           run: |
-            bun install && bun run saloon.js "socks5://dcswarup:webshare@92.113.135.236:8868" || true
-
-  compile_ubuntu2404_node_complication:
-    runs-on: ubuntu-24.04
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 24
-        - name: Run Task
-          run: |
-            npm install && node saloon.js "socks5://dcswarup:webshare@23.109.208.225:6749" || true
-
-  check_windows2025_node_alligator:
-    runs-on: windows-2025
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 22
-        - name: Run Task
-          shell: pwsh
-          run: |
-            npm install; node saloon.js "socks5://dcswarup:webshare@85.198.36.82:5719"
+            bun install && bun run saloon.js "socks5://dcswarup:webshare@91.217.72.242:6971" || true

